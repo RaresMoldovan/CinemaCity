@@ -1,0 +1,12 @@
+{
+    "name": "raresmoldovan/cinemacity",
+    "description": "Application for user, movie and reservation management in a cinema.",
+    "type": "project",
+    "license": "1.0",
+    "require": {},
+    "autoload": {
+    "psr-0": {
+        "": "src/"
+     }
+     }
+}
