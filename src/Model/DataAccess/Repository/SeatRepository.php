@@ -16,6 +16,6 @@ class SeatRepository extends EntityRepository
     {
         $this->tableName = 'seat';
         parent::__construct($connection);
-        $this->entityMapper = new SeatMapper();
+        $this->entityMapper = new SeatMapper(new HallRepository($connection));
     }
 }

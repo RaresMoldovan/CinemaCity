@@ -6,9 +6,11 @@
  * Time: 19:16
  */
 
+namespace Model\ConsoleManager\Output;
+
 class ErrorReporter
 {
-    public static function report(string $errorMessage)
+    public function report(string $errorMessage)
     {
         echo "ERROR!" . PHP_EOL . $errorMessage;
     }

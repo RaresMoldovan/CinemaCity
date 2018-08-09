@@ -90,7 +90,11 @@ abstract class EntityRepository
         $queryString = "SELECT * FROM " . $this->tableName . " WHERE " . $columnName . "=:val";
         $statement   = $this->connection->prepare($queryString);
         $statement->bindValue("val", $value);
+        $statement->execute();
         $result      = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        if(count($result)===0) {
+            return null;
+        }
         return $this->entityMapper->mapAll($result);
     }
 
@@ -104,7 +108,16 @@ abstract class EntityRepository
         $queryString .= "(" . $this->createValuesString($entity) .")";
         //Execute the insert query
         $this->connection->exec($queryString);
+    }
 
+    public function insertHardCodedId(Entity $entity) : void
+    {
+        $columns     = implode(',', $this->columnNames);
+        $queryString = "INSERT INTO " . $this->tableName . " (id," . $columns . ")" . " VALUES ";
+        $queryString .= "({$entity->getId()}," . $this->createValuesString($entity) .")";
+        $queryString .= " ON DUPLICATE KEY UPDATE " . $this->createValuesString($entity, true);
+        //Execute the insert query
+        $this->connection->exec($queryString);
     }
 
     /**

@@ -9,6 +9,8 @@
 namespace Model\Domain\Entity;
 
 
+use Model\Domain\Collection\EntityCollection;
+
 class Hall implements Entity
 {
     private $id;
@@ -75,6 +77,5 @@ class Hall implements Entity
     {
         $this->nrOfPlaces = $nrOfPlaces;
     }
-
 
 }

@@ -25,6 +25,18 @@ class MovieRepository extends EntityRepository
     public function insert(Entity $entity): void
     {
         parent::insert($entity);
+        $this->attachGenres($entity);
+    }
+
+    public function insertHardCodedId(Entity $entity): void
+    {
+        parent::insertHardCodedId($entity);
+        $this->attachGenres($entity);
+    }
+
+    private function attachGenres(Entity $entity)
+    {
+        parent::insert($entity);
         $genreCollection = $entity->getGenres();
         $queryString     = "INSERT INTO movie_to_genre (movie_id, genre_id) VALUES (:movie, :genre)";
         $statement       = $this->connection->prepare($queryString);

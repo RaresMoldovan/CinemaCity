@@ -28,6 +28,7 @@ class CSVReader
 
     /**
      * @return array
+     * @throws \Exception
      */
     public function getContent() : array
     {
@@ -39,14 +40,21 @@ class CSVReader
 
     /**
      * @return array|bool
+     * @throws \Exception
      */
     private function readCSV() : array
     {
+
         $lines  = array();
         $handle = fopen($this->fileName, "r");
-        if ($handle != false) {;
+        if ($handle != false) {
+        $line = fgetcsv($handle, 0, $this->separator);
+        $nrOfEntries = count($line);
             while (($line = fgetcsv($handle, 0, $this->separator)) !== false) {
-                $this->content[] = $line;
+                if(count($line)!==$nrOfEntries) {
+                    throw new \Exception('CSV file is not consistent in row data!');
+                }
+               $lines[] = $line;
             }
             fclose($handle);
             return $lines;
