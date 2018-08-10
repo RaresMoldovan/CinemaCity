@@ -37,6 +37,14 @@ class OptionReader
     }
 
     /**
+     * @return mixed
+     */
+    public function getOptions()
+    {
+        return $this->optionValues;
+    }
+
+    /**
      * @return array
      */
     private function createOptionArray() : array

@@ -40,14 +40,12 @@ class MovieImporter
             $record[5] = trim($record[5]);
             $genres = explode(',', $record[5]);
             foreach($genres as $genreName) {
-                var_dump($genreName);
                 $genre = $this->genreRepository->findByColumn('name', $genreName);
                 if($genre===null) {
                     throw new \Exception('Genre not found!');
                 }
                 $movie->addGenre($genre->current());
             }
-            var_dump($movie);
             $this->movieRepository->insertHardCodedId($movie);
         }
     }

@@ -36,14 +36,13 @@ class MovieRepository extends EntityRepository
 
     private function attachGenres(Entity $entity)
     {
-        parent::insert($entity);
         $genreCollection = $entity->getGenres();
         $queryString     = "INSERT INTO movie_to_genre (movie_id, genre_id) VALUES (:movie, :genre)";
         $statement       = $this->connection->prepare($queryString);
         $movieId         = $entity->getId();
-        $statement->bindValue("movie", $movieId);
+        $statement->bindValue("movie", $movieId, \PDO::PARAM_INT);
         foreach ($genreCollection as $genre) {
-            $statement->bindValue("genre", $genre->getId());
+            $statement->bindValue("genre", $genre->getId(), \PDO::PARAM_INT);
             $statement->execute();
         }
     }

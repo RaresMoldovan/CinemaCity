@@ -9,13 +9,14 @@
 namespace Model\DataAccess\Repository;
 
 use Model\DataAccess\Mapper\ShowMapper;
+use Model\Domain\Entity\Hall;
 
 class ShowRepository extends EntityRepository
 {
-    public function __construct(\PDO $connection)
+    public function __construct(\PDO $connection, MovieRepository $movieRepository, HallRepository $hallRepository)
     {
-        $this->tableName = 'show';
+        $this->tableName = '`show`';
         parent::__construct($connection);
-        $this->entityMapper = new ShowMapper();
+        $this->entityMapper = new ShowMapper($movieRepository, $hallRepository);
     }
 }

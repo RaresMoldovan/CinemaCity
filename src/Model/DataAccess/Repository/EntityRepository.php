@@ -45,7 +45,7 @@ abstract class EntityRepository
     private function generateColumnNames()
     {
         //TODO Database name from config.
-        $columnQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'cinema' AND TABLE_NAME = '{$this->tableName}'";
+        $columnQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'cinema' AND TABLE_NAME = '" . trim($this->tableName, '`') . "'";
         $result = $this->connection->query($columnQuery);
         $associative = $result->fetchAll();
         foreach($associative as $columnArray) {
@@ -85,7 +85,7 @@ abstract class EntityRepository
      * @param string $value
      * @return EntityCollection
      */
-    public function findByColumn(string $columnName, string $value): EntityCollection
+    public function findByColumn(string $columnName, string $value)
     {
         $queryString = "SELECT * FROM " . $this->tableName . " WHERE " . $columnName . "=:val";
         $statement   = $this->connection->prepare($queryString);
@@ -107,9 +107,13 @@ abstract class EntityRepository
         $queryString = "INSERT INTO " . $this->tableName . " (" . $columns . ")" . " VALUES ";
         $queryString .= "(" . $this->createValuesString($entity) .")";
         //Execute the insert query
+        var_dump($queryString);
         $this->connection->exec($queryString);
     }
 
+    /**
+     * @param Entity $entity
+     */
     public function insertHardCodedId(Entity $entity) : void
     {
         $columns     = implode(',', $this->columnNames);
@@ -159,7 +163,7 @@ abstract class EntityRepository
             } else {
                 $valueToBeInserted = $entity->{'get' . $camelCased}();
             }
-            $valuesArray[] =  ($withColumnNames ? $column . "=" : '') . (is_string($valueToBeInserted) ? "'$valueToBeInserted'" : $valueToBeInserted);
+            $valuesArray[] =  ($withColumnNames ? $column . "=" : '') . (is_string($valueToBeInserted) ? $this->connection->quote($valueToBeInserted) : $valueToBeInserted);
         }
         $valuesString = implode(', ', $valuesArray);
         return $valuesString;

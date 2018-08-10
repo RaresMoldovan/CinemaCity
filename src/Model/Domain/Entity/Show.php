@@ -14,7 +14,7 @@ class Show implements Entity
     private $id;
     private $movie;
     private $hall;
-    private $date;
+    private $time;
 
     /**
      * Show constructor.
@@ -23,12 +23,12 @@ class Show implements Entity
      * @param $hall
      * @param $date
      */
-    public function __construct(int $id, Movie $movie, Hall $hall, string $date)
+    public function __construct(int $id, Movie $movie, Hall $hall, string $time)
     {
         $this->id    = $id;
         $this->movie = $movie;
         $this->hall  = $hall;
-        $this->date  = $date;
+        $this->time  = $time;
     }
 
     /**
@@ -82,17 +82,17 @@ class Show implements Entity
     /**
      * @return string
      */
-    public function getDate(): string
+    public function getTime(): string
     {
-        return $this->date;
+        return $this->time;
     }
 
     /**
-     * @param string $date
+     * @param string $time
      */
-    public function setDate(string $date): void
+    public function setTime(string $time): void
     {
-        $this->date = $date;
+        $this->time = $time;
     }
 
 
