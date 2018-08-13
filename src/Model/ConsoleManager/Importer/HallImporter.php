@@ -41,8 +41,12 @@ class HallImporter
             $record[2] = trim($record[2]);
             $seatCodes = explode(' ', $record[2]);
             $hall      = new Hall((int)$record[0], $record[1], count($seatCodes));
-            var_dump($hall);
             $this->hallRepository->insertHardCodedId($hall);
+            //Delete all previous records of seats(we cannot know for sure from csv if seats were deleted/altered)
+            $this->seatRepository->deleteSeatsOfHall($hall->getId());
+            //Reset auto_increment
+            $this->seatRepository->resetAutoIncrement();
+            //Import seats
             foreach ($seatCodes as $idAndCode) {
                 $this->importSeat($hall, $idAndCode);
             }
@@ -52,15 +56,11 @@ class HallImporter
 
     /**
      * @param Hall $hall
-     * @param string $idAndCode
+     * @param string $code
      * @throws \Exception
      */
-    private function importSeat(Hall $hall, string $idAndCode): void
+    private function importSeat(Hall $hall, string $code): void
     {
-        $split = explode(':', $idAndCode);
-        if (count($split) !== 2) {
-            throw new \Exception('Wrong seat format');
-        }
-        $this->seatRepository->insertHardCodedId(new Seat((int)$split[0], $hall, $split[1]));
+        $this->seatRepository->insert(new Seat(0, $hall, $code));
     }
 }

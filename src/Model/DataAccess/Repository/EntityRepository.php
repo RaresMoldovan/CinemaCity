@@ -107,7 +107,6 @@ abstract class EntityRepository
         $queryString = "INSERT INTO " . $this->tableName . " (" . $columns . ")" . " VALUES ";
         $queryString .= "(" . $this->createValuesString($entity) .")";
         //Execute the insert query
-        var_dump($queryString);
         $this->connection->exec($queryString);
     }
 
@@ -146,6 +145,15 @@ abstract class EntityRepository
 
     }
 
+    /**
+     * Resets the auto increment on id value in the table.
+     */
+    public function resetAutoIncrement() : void
+    {
+        $resetString = "ALTER TABLE " . $this->tableName . " AUTO_INCREMENT=1";
+        var_dump($resetString);
+        $this->connection->exec($resetString);
+    }
     /**
      * @param Entity $entity
      * @param bool $withColumnNames

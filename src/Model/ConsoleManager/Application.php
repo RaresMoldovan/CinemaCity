@@ -32,7 +32,8 @@ class Application
     public function __construct(ErrorReporter $errorReporter)
     {
         $this->errorReporter         = $errorReporter;
-        $this->databaseConfiguration = new DatabaseConfiguration('mysql', 'cinema', 'root', '');
+        $config = require __DIR__ . '/../DataAccess/config.php';
+        $this->databaseConfiguration = new DatabaseConfiguration($config['host'], $config['databaseName'], $config['username'], $config['password']);
         $this->databaseConnection    = new DatabaseConnection($this->databaseConfiguration);
     }
 

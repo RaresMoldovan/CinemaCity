@@ -1,2 +1,4 @@
-# This allows you to redirect your entire website to any other domain
-RewriteRule    .* index.php
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule .* /index.php [L]

@@ -36,6 +36,12 @@ class MovieRepository extends EntityRepository
 
     private function attachGenres(Entity $entity)
     {
+        //Delete all previous genre mentions
+        $deleteQueryString = "DELETE FROM movie_to_genre WHERE movie_id=:movie";
+        $deleteStatement = $this->connection->prepare($deleteQueryString);
+        $deleteStatement->bindValue("movie", $entity->getId(), \PDO::PARAM_INT);
+        $deleteStatement->execute();
+        //Insert genres
         $genreCollection = $entity->getGenres();
         $queryString     = "INSERT INTO movie_to_genre (movie_id, genre_id) VALUES (:movie, :genre)";
         $statement       = $this->connection->prepare($queryString);

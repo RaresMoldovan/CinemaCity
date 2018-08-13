@@ -18,4 +18,12 @@ class SeatRepository extends EntityRepository
         parent::__construct($connection);
         $this->entityMapper = new SeatMapper(new HallRepository($connection));
     }
+
+    public function deleteSeatsOfHall(int $hallId) : void
+    {
+        $deleteString = 'DELETE FROM `seat` WHERE hall_id=:hall';
+        $statement = $this->connection->prepare($deleteString);
+        $statement->bindValue("hall",$hallId, \PDO::PARAM_INT);
+        $statement->execute();
+    }
 }
