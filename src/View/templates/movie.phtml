@@ -1,0 +1,63 @@
+<div class="container">
+    <div id="banner-title" class="jumbotron">
+        <h1><?php echo $movie->getName()?></h1>
+        <p><i><?php echo $movie->getDescription()?></i></p>
+    </div>
+</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <img class="profile-img-card" src= "<?php echo  $movie->getImage(); ?>" height="500" />
+            </div>
+            <div class="col-md3">
+                <div class="c">GENRES</div>
+                <div class="d" id="genreList">
+                    <?php foreach($genres as $genre): echo $genre->getName() . ' '; endforeach;?>
+                </div>
+                <form id="showForm">
+                <div class="d">
+                <select class="form-control" title="Show display" name="genre" id="showSelector" >
+                    <?php foreach($shows as $show): ?>
+                        <option value="<?php echo $show->getId() ?>" ><div class="a"><?php echo $show->getHall()->getName() . ': ' . $show->getTime() ?></div></option>
+                    <?php endforeach; ?>
+                </select>
+                </div>
+                    <div class="c">
+                    <button class="btn btn-primary" type="submit" id="bookButton">Book</button>
+                    </div>
+                </form>
+
+                <br>
+                <div class="c"> Remaining number of seats: <div class="d"> <span id="number"></span> </div></div>
+            </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        getRequest();
+        setInterval(getRequest, 5000);
+    });
+
+    $('#showForm').on('submit', function(event) {
+        event.preventDefault();
+        document.location.href = '/shows/' + $('#showSelector').val();
+    });
+
+    function getRequest() {
+        var showId = $('#showSelector').val();
+        $.ajax({
+            url: "/shows/seats/".concat(showId),
+            success:
+                function (data) {
+                    $('#number').html(data); //insert text of test.php into your div
+
+                },
+        });
+    }
+</script>

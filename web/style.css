@@ -1,0 +1,214 @@
+body {
+    background-image: url("https://media.istockphoto.com/vectors/cinema-tape-film-reel-and-clapperboard-vintage-seamless-pattern-vector-id864969832");
+}
+
+.container{
+    background-color: rgba(255,255,255, 0.9);
+
+}
+
+.error{
+    color:red;
+    text-align: center;
+}
+
+.footer{
+    padding-top:2%;
+    color:black;
+    text-align:center;
+}
+
+#formContainer {
+    margin-top:10%;
+    padding-top: 10%;
+    padding-bottom: 10%;
+}
+
+#unameTxt {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#passTxt {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#rpassTxt {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+#main {
+    position:relative;
+}
+
+.col-md-3 {
+    width:auto;
+}
+#logInText {
+    font-style:italic;
+    color:lightsteelblue;
+}
+
+img{
+    padding-top:2%;
+}
+.cont {
+    background-color: rgba(255,255,255, 0.9);
+    padding: 0px;
+}
+#banner-title {
+    background: rgba(0,0,0,.75);
+    border-radius: 0px;
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+
+}
+div.a {
+    font-size: 20px;
+}
+div.b{
+    font-size:50px;
+}
+div.c{
+    font-size:30px;
+    text-decoration-color: saddlebrown;
+    font-weight:bold;
+    text-align:center;
+}
+.form-control {
+    display: inline;
+    width: 50%;
+    padding: 10px;
+}
+
+#filter-form{
+    background-color: rgba(255, 255, 255, 1);
+    padding:20px;
+}
+
+#date{
+    width:70%;
+}
+
+.pagination {
+    display: inline-block;
+    width: 50%;
+    padding: 10px;
+    text-align:center;
+}
+
+.pagination a {
+    color: dodgerblue;
+    float: left;
+    padding: 8px 16px;
+    font-size:20px;
+    text-decoration: none;
+}
+
+.box {
+    width: 500px;
+    margin: 200px 0;
+}
+
+.shape1{
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #0074d9;
+    border-radius: 80px;
+    float: left;
+    margin-right: -50px;
+}
+.shape2 {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #0074d9;
+    border-radius: 80px;
+    margin-top: -30px;
+    float: left;
+}
+.shape3 {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #0074d9;
+    border-radius: 80px;
+    margin-top: -30px;
+    float: left;
+    margin-left: -31px;
+}
+.shape4 {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #0074d9;
+    border-radius: 80px;
+    margin-top: -25px;
+    float: left;
+    margin-left: -32px;
+}
+.shape5 {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #0074d9;
+    border-radius: 80px;
+    float: left;
+    margin-right: -48px;
+    margin-left: -32px;
+    margin-top: -30px;
+}
+.shape6 {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #0074d9;
+    border-radius: 80px;
+    float: left;
+    margin-right: -20px;
+    margin-top: -35px;
+}
+.shape7 {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    background-color: #0074d9;
+    border-radius: 80px;
+    float: left;
+    margin-right: -20px;
+    margin-top: -57px;
+}
+.float {
+    position: absolute;
+    z-index: 2;
+}
+
+.form {
+    margin-left: 145px;
+}
+
+a {
+    font-size:large;
+}
+
+
+#bookButton
+{
+    width:300px;
+}
+#confirmButton
+{
+    width:300px;
+}
+div.d{
+    font-size:30px;
+    color: saddlebrown;
+    font-style: italic;
+    text-align:center;
+}

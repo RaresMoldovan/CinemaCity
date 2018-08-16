@@ -11,9 +11,9 @@ namespace Model\ConsoleManager\Validator;
 
 class CSVOptionValidator
 {
-    public function validateFileName(string $fileName) : string
+    public function validateFileName(string $fileName): string
     {
-        if(!file_exists($fileName)) {
+        if (!file_exists($fileName)) {
             return 'File not found!';
         }
         return '';

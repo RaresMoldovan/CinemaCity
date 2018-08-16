@@ -29,7 +29,7 @@ class DatabaseConnection
     /**
      * @return \PDO
      */
-    public function getPDO() : \PDO
+    public function getPDO(): \PDO
     {
         return $this->pdo;
     }
@@ -37,11 +37,11 @@ class DatabaseConnection
     /**
      * Constructs the PDO object, called in the class constructor.
      */
-    private function constructPDO() : void
+    private function constructPDO(): void
     {
         $this->pdo = null;
         try {
-            $dsn = $this->configuration->getHost() . ':dbname=' . $this->configuration->getDatabaseName();
+            $dsn       = $this->configuration->getHost() . ':dbname=' . $this->configuration->getDatabaseName();
             $this->pdo = new \PDO($dsn, $this->configuration->getUsername(), $this->configuration->getPassword());
         } catch (\PDOException $e) {
             echo $e->getMessage();

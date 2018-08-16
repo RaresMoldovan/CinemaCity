@@ -10,15 +10,20 @@ namespace Model\DataAccess\Mapper;
 
 use Model\Domain\Entity\Entity;
 use Model\Domain\Entity\Hall;
+use Model\Domain\Entity\NullEntity;
 
 class HallMapper extends EntityMapper
 {
     const FIELD_NR_PLACES = 'nr_of_places';
 
+    /**
+     * @param array $associative
+     * @return Entity
+     */
     public function map(array $associative): Entity
     {
-        $id = $associative[parent::FIELD_ID];
-        $name =  $associative[parent::FIELD_NAME];
+        $id         = $associative[parent::FIELD_ID];
+        $name       = $associative[parent::FIELD_NAME];
         $nrOfPlaces = $associative[self::FIELD_NR_PLACES];
         return new Hall($id, $name, $nrOfPlaces);
     }

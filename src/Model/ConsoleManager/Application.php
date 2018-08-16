@@ -56,7 +56,7 @@ class Application
     {
         $csvData        = $this->commonFlow();
         $hallRepository = new HallRepository($this->databaseConnection->getPDO());
-        $seatRepository = new SeatRepository($this->databaseConnection->getPDO());
+        $seatRepository = new SeatRepository($this->databaseConnection->getPDO(), $hallRepository);
         $hallImporter   = new HallImporter($csvData, $hallRepository, $seatRepository);
         try {
             $hallImporter->import();
@@ -65,6 +65,9 @@ class Application
         }
     }
 
+    /**
+     * Function that performs the main flow of the movie importing mechanism.
+     */
     public function runMovieImporter(): void
     {
         $csvData         = $this->commonFlow();
@@ -82,8 +85,7 @@ class Application
     /**
      * @return array
      */
-    private
-    function commonFlow(): array
+    private function commonFlow(): array
     {
         global $argv, $argc;
         $optionValidator = new CSVOptionValidator();

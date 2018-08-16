@@ -25,7 +25,7 @@ class User implements Entity
     {
         $this->id       = $id;
         $this->email    = $email;
-        $this->password = md5($password);
+        $this->password = $password;
     }
 
     /**

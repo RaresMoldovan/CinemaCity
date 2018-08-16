@@ -10,8 +10,13 @@ namespace Model\DataAccess\Repository;
 
 use Model\DataAccess\Mapper\UserMapper;
 use Model\Domain\Entity\User;
+
 class UserRepository extends EntityRepository
 {
+    /**
+     * UserRepository constructor.
+     * @param \PDO $connection
+     */
     public function __construct(\PDO $connection)
     {
         $this->tableName = 'user';

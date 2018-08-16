@@ -1,0 +1,87 @@
+<?php /** @var $this View\MovieView */?>
+
+<body>
+    <div class="container">
+        <div id="banner-title" class="jumbotron">
+            <h1>CINEMA RESERVATION SYSTEM</h1>
+            <p><i>Choose a movie and go have fun!</i></p>
+        </div>
+<form id="filter-form">
+    <div class="row">
+        <div class="col-md-3">
+            Genre:
+            <select class="form-control" title="Genre filter" name="genre" >
+                <option value="0">All</option>
+                <?php /** @var $genres \Model\Domain\Collection\EntityCollection */?>
+                <?php foreach($genres as $genre): ?>
+                    <option value="<?php echo $genre->getId() ?>" <?php if ($urlHelper->getQueryParamValue('genre')==$genre->getId()): echo 'selected'; endif; ?> ><?php echo $genre->getName() ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="col-md-3">
+            Year:
+            <input  class="form-control" title = "Year filter" type="text" name="year" value="<?php if($urlHelper->getQueryParamValue('year')!=''): echo $urlHelper->getQueryParamValue('year'); else: echo 'All'; endif;?>">
+        </div>
+
+        <div class="col-md-3">
+            Date: <input class="form-control" id="date" type="date" name="date" value="<?php if($urlHelper->getQueryParamValue('date')!=''): echo $urlHelper->getQueryParamValue('date'); else: echo ''; endif;?>">
+        </div>
+
+        <div class="col-md-2">
+            <!--<input  type="checkbox" name="sort" value="1" <?php //if($urlHelper->getQueryParamValue('sort')!=''): echo 'checked'; endif;?>> Sort by year -->
+            Sort:
+            <select class="form-control", title="Sort filter" name="sort">
+                <option value=""></option>
+                <option value="asc" <?php if ($urlHelper->getQueryParamValue('sort')=='asc'): echo 'selected'; endif; ?>>ASC</option>
+                <option value="desc" <?php if ($urlHelper->getQueryParamValue('sort')=='desc'): echo 'selected'; endif; ?>>DESC</option>
+            </select>
+        </div>
+        <div class="col-md-1">
+            <input class="btn btn-default" type="submit" value="Filter">
+        </div>
+
+    </div>
+</form>
+
+<?php if (!isset($movies)): return; endif; ?>
+
+        <?php if(count($movies)===0) : ?>
+            <div class="d">No results.</div>
+        <?php else: ?>
+
+<div class="table-hover">
+<table class="table table-hover" style="width:1000px!important;">
+    <?php foreach ($movies as $movie):  ?>
+    <tr>
+        <td>
+            <a href="/movies/<?php echo $movie->getId(); ?>">
+            <img class="profile-img-card"  src= "<?php echo  $movie->getImage(); ?>" height="130" width="100" />
+            </a>
+        </td>
+        <td>
+            <div class="c"><a href="/movies/<?php echo $movie->getId(); ?>"><?php echo $movie->getName() ?></a></div>
+            <div class="a"> <?php echo $movie->getDescription(); ?> </div>
+
+        </td>
+        <td>
+            <div class="b">
+            <?php echo $movie->getYear(); ?>
+            </div>
+        </td>
+    </tr>
+        <div>
+
+        </div>
+    <?php endforeach;?>
+</table>
+</div>
+        <?php endif;?>
+        <a class="pagination">
+        <?php $nrPages = ($nrOfRecords%\Model\DataAccess\Repository\MovieRepository::RECORDS_PER_PAGE!=0) ? $nrOfRecords/\Model\DataAccess\Repository\MovieRepository::RECORDS_PER_PAGE+1 : $nrOfRecords/\Model\DataAccess\Repository\MovieRepository::RECORDS_PER_PAGE;
+        for($i=1; $i<=$nrPages; $i++): ?>
+            <a href="<?php echo $urlHelper->addQueryParams(['page'=>$i]) ?>"><?php echo $i ?></a>
+        <?php endfor;?>
+        </a>
+    </div>
+    </div>
+</body>

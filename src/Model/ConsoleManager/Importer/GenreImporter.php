@@ -15,6 +15,7 @@ class GenreImporter
 {
     private $csvFormat;
     private $genreRepository;
+
     /**
      * GenreImporter constructor.
      * @param $csvFormat array
@@ -22,7 +23,7 @@ class GenreImporter
      */
     public function __construct(array $csvFormat, GenreRepository $genreRepository)
     {
-        $this->csvFormat = $csvFormat;
+        $this->csvFormat       = $csvFormat;
         $this->genreRepository = $genreRepository;
     }
 
@@ -33,8 +34,7 @@ class GenreImporter
      */
     public function import()
     {
-        foreach($this->csvFormat as $record)
-        {
+        foreach ($this->csvFormat as $record) {
             $genre = new Genre($record[0], $record[1]);
             $this->genreRepository->insertHardCodedId($genre);
         }

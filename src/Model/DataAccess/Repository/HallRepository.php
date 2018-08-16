@@ -13,6 +13,10 @@ use Model\DataAccess\Mapper\HallMapper;
 
 class HallRepository extends EntityRepository
 {
+    /**
+     * HallRepository constructor.
+     * @param \PDO $connection
+     */
     public function __construct(\PDO $connection)
     {
         $this->tableName = 'hall';

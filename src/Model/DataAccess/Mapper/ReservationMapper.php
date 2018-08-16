@@ -13,6 +13,7 @@ use Model\DataAccess\Repository\ShowRepository;
 use Model\DataAccess\Repository\UserRepository;
 use Model\Domain\Entity\Entity;
 use Model\Domain\Entity\Reservation;
+use Model\Domain\Entity\NullEntity;
 
 class ReservationMapper extends EntityMapper
 {
@@ -37,16 +38,19 @@ class ReservationMapper extends EntityMapper
         $this->seatRepository = $seatRepository;
     }
 
-
+    /**
+     * @param array $associative
+     * @return Entity
+     */
     public function map(array $associative): Entity
     {
-        $id = $associative[parent::FIELD_ID];
+        $id     = $associative[parent::FIELD_ID];
         $showId = $associative[self::FIELD_SHOW];
         $seatId = $associative[self::FIELD_SEAT];
         $userId = $associative[self::FIELD_USER];
         //Id to actual object mapping
         $show = $this->showRepository->getById($showId);
-        $seat = $this->showRepository->getById($seatId);
+        $seat = $this->seatRepository->getById($seatId);
         $user = $this->userRepository->getById($userId);
         return new Reservation($id, $user, $show, $seat);
     }

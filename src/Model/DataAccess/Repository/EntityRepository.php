@@ -12,6 +12,7 @@ use Model\DataAccess\Mapper\EntityMapper;
 use Model\DataAccess\Util\StringUtil;
 use Model\Domain\Collection\EntityCollection;
 use Model\Domain\Entity\Entity;
+use Model\Domain\Entity\NullEntity;
 
 abstract class EntityRepository
 {
@@ -46,15 +47,16 @@ abstract class EntityRepository
     {
         //TODO Database name from config.
         $columnQuery = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = 'cinema' AND TABLE_NAME = '" . trim($this->tableName, '`') . "'";
-        $result = $this->connection->query($columnQuery);
+        $result      = $this->connection->query($columnQuery);
         $associative = $result->fetchAll();
-        foreach($associative as $columnArray) {
-                if($columnArray[0]!=='id') {
-                    $this->columnNames[] = $columnArray[0];
-                }
+        foreach ($associative as $columnArray) {
+            if ($columnArray[0] !== 'id') {
+                $this->columnNames[] = $columnArray[0];
+            }
         }
 
     }
+
     /**
      * @return EntityCollection
      */
@@ -70,13 +72,16 @@ abstract class EntityRepository
      * @param int $id
      * @return Entity
      */
-    public function getById(int $id): Entity
+    public function getById(int $id): ?Entity
     {
         $queryString = "SELECT * FROM " . $this->tableName . " WHERE id=:id";
         $statement   = $this->connection->prepare($queryString);
         $statement->bindValue("id", $id, \PDO::PARAM_INT);
         $statement->execute();
         $result = $statement->fetch();
+        if ($result === false) {
+            return null;
+        }
         return $this->entityMapper->map($result);
     }
 
@@ -85,16 +90,13 @@ abstract class EntityRepository
      * @param string $value
      * @return EntityCollection
      */
-    public function findByColumn(string $columnName, string $value)
+    public function findByColumn(string $columnName, string $value): EntityCollection
     {
         $queryString = "SELECT * FROM " . $this->tableName . " WHERE " . $columnName . "=:val";
         $statement   = $this->connection->prepare($queryString);
         $statement->bindValue("val", $value);
         $statement->execute();
-        $result      = $statement->fetchAll(\PDO::FETCH_ASSOC);
-        if(count($result)===0) {
-            return null;
-        }
+        $result = $statement->fetchAll(\PDO::FETCH_ASSOC);
         return $this->entityMapper->mapAll($result);
     }
 
@@ -105,7 +107,7 @@ abstract class EntityRepository
     {
         $columns     = implode(',', $this->columnNames);
         $queryString = "INSERT INTO " . $this->tableName . " (" . $columns . ")" . " VALUES ";
-        $queryString .= "(" . $this->createValuesString($entity) .")";
+        $queryString .= "(" . $this->createValuesString($entity) . ")";
         //Execute the insert query
         $this->connection->exec($queryString);
     }
@@ -113,11 +115,11 @@ abstract class EntityRepository
     /**
      * @param Entity $entity
      */
-    public function insertHardCodedId(Entity $entity) : void
+    public function insertHardCodedId(Entity $entity): void
     {
         $columns     = implode(',', $this->columnNames);
         $queryString = "INSERT INTO " . $this->tableName . " (id," . $columns . ")" . " VALUES ";
-        $queryString .= "({$entity->getId()}," . $this->createValuesString($entity) .")";
+        $queryString .= "({$entity->getId()}," . $this->createValuesString($entity) . ")";
         $queryString .= " ON DUPLICATE KEY UPDATE " . $this->createValuesString($entity, true);
         //Execute the insert query
         $this->connection->exec($queryString);
@@ -129,7 +131,7 @@ abstract class EntityRepository
     public function update(Entity $entity): void
     {
         $queryString = "UPDATE " . $this->tableName . " SET ";
-        $queryString .=  $this->createValuesString($entity, true) . " ";
+        $queryString .= $this->createValuesString($entity, true) . " ";
         $queryString .= " WHERE id=" . $entity->getId();
         $this->connection->exec($queryString);
 
@@ -148,12 +150,12 @@ abstract class EntityRepository
     /**
      * Resets the auto increment on id value in the table.
      */
-    public function resetAutoIncrement() : void
+    public function resetAutoIncrement(): void
     {
         $resetString = "ALTER TABLE " . $this->tableName . " AUTO_INCREMENT=1";
-        var_dump($resetString);
         $this->connection->exec($resetString);
     }
+
     /**
      * @param Entity $entity
      * @param bool $withColumnNames
@@ -171,7 +173,7 @@ abstract class EntityRepository
             } else {
                 $valueToBeInserted = $entity->{'get' . $camelCased}();
             }
-            $valuesArray[] =  ($withColumnNames ? $column . "=" : '') . (is_string($valueToBeInserted) ? $this->connection->quote($valueToBeInserted) : $valueToBeInserted);
+            $valuesArray[] = ($withColumnNames ? $column . "=" : '') . (is_string($valueToBeInserted) ? $this->connection->quote($valueToBeInserted) : $valueToBeInserted);
         }
         $valuesString = implode(', ', $valuesArray);
         return $valuesString;

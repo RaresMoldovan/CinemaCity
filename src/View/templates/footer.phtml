@@ -1,0 +1,12 @@
+
+<div class="container">
+<div class="footer"><?php if($loggedUser!==''): echo 'Logged in as ' . $loggedUser . '!';?>
+    <br>
+    <a href="/users/logOut">Log out</a>
+    <?php else: echo 'Not logged in!'; ?>
+    <br>
+    <a href="/users/logIn">Log in</a>
+    <?php endif;?>
+
+</div>
+</div>

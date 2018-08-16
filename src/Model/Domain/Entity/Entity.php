@@ -14,5 +14,5 @@ interface Entity
      * An entity is unique, therefore it is identified by an id.
      * @return int
      */
-    public function getId() : int;
+    public function getId(): int;
 }

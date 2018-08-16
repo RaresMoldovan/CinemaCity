@@ -33,10 +33,10 @@ class DatabaseConfiguration
 
     public function __construct(string $host, string $databaseName, string $username, string $password)
     {
-        $this->host = $host;
+        $this->host         = $host;
         $this->databaseName = $databaseName;
-        $this->username = $username;
-        $this->password = $password;
+        $this->username     = $username;
+        $this->password     = $password;
     }
 
     /**

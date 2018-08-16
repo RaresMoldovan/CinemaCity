@@ -21,18 +21,18 @@ class CSVReader
      */
     public function __construct(string $fileName, string $separator)
     {
-        $this->fileName = $fileName;
+        $this->fileName  = $fileName;
         $this->separator = $separator;
-        $this->content = [];
+        $this->content   = [];
     }
 
     /**
      * @return array
      * @throws \Exception
      */
-    public function getContent() : array
+    public function getContent(): array
     {
-        if(count($this->content)===0) {
+        if (count($this->content) === 0) {
             $this->content = $this->readCSV();
         }
         return $this->content;
@@ -42,19 +42,19 @@ class CSVReader
      * @return array|bool
      * @throws \Exception
      */
-    private function readCSV() : array
+    private function readCSV(): array
     {
 
         $lines  = array();
         $handle = fopen($this->fileName, "r");
         if ($handle != false) {
-        $line = fgetcsv($handle, 0, $this->separator);
-        $nrOfEntries = count($line);
+            $line        = fgetcsv($handle, 0, $this->separator);
+            $nrOfEntries = count($line);
             while (($line = fgetcsv($handle, 0, $this->separator)) !== false) {
-                if(count($line)!==$nrOfEntries) {
+                if (count($line) !== $nrOfEntries) {
                     throw new \Exception('CSV file is not consistent in row data!');
                 }
-               $lines[] = $line;
+                $lines[] = $line;
             }
             fclose($handle);
             return $lines;

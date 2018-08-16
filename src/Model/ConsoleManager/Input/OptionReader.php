@@ -47,13 +47,13 @@ class OptionReader
     /**
      * @return array
      */
-    private function createOptionArray() : array
+    private function createOptionArray(): array
     {
         $options = [];
-        foreach($this->mandatoryValueOptions as $mandatoryOption) {
+        foreach ($this->mandatoryValueOptions as $mandatoryOption) {
             $options[] = $mandatoryOption . ':';
         }
-        foreach($this->nonMandatoryValueOptions as $nonMandatoryOption) {
+        foreach ($this->nonMandatoryValueOptions as $nonMandatoryOption) {
             $options[] = $nonMandatoryOption . ':';
         }
         return $options;
@@ -62,7 +62,7 @@ class OptionReader
     /**
      *
      */
-    private function populateOptionValues() : void
+    private function populateOptionValues(): void
     {
         $this->optionValues = getopt('', $this->createOptionArray());
     }

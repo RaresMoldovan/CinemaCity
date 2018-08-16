@@ -15,7 +15,10 @@ use Model\Domain\Collection\EntityCollection;
 
 class GenreRepository extends EntityRepository
 {
-
+    /**
+     * GenreRepository constructor.
+     * @param \PDO $connection
+     */
     public function __construct(\PDO $connection)
     {
         $this->tableName = 'genre';
@@ -23,17 +26,21 @@ class GenreRepository extends EntityRepository
         $this->entityMapper = new GenreMapper();
     }
 
-    public function getGenresForMovie(int $movieId) : EntityCollection
+    /**
+     * @param int $movieId
+     * @return EntityCollection
+     */
+    public function getGenresForMovie(int $movieId): EntityCollection
     {
         //Execute the select query
         $queryString = "SELECT genre_id FROM movie_to_genre WHERE movie_id=:movie";
-        $statement = $this->connection->prepare($queryString);
+        $statement   = $this->connection->prepare($queryString);
         $statement->bindValue('movie', $movieId, \PDO::PARAM_INT);
         $statement->execute();
         $result = $statement->fetchAll();
         //Retrieve the genres
         $genreCollection = new EntityCollection();
-        foreach($result as $row) {
+        foreach ($result as $row) {
             $genreCollection->addItem($this->getById($row[0]));
         }
         return $genreCollection;

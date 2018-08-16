@@ -37,7 +37,7 @@ class Movie implements Entity
         $this->description = $description;
         $this->year        = $year;
         $this->image       = $image;
-        $this->genres = new EntityCollection();
+        $this->genres      = new EntityCollection();
     }
 
     /**
@@ -123,7 +123,7 @@ class Movie implements Entity
     /**
      * @return EntityCollection
      */
-    public function getGenres() : EntityCollection
+    public function getGenres(): EntityCollection
     {
         return $this->genres;
     }
@@ -131,7 +131,7 @@ class Movie implements Entity
     /**
      * @param Genre $genre
      */
-    public function addGenre(Genre $genre) : void
+    public function addGenre(Genre $genre): void
     {
         $this->genres->addItem($genre);
     }
@@ -139,9 +139,9 @@ class Movie implements Entity
     /**
      * @param EntityCollection $genres
      */
-    public function addGenres(EntityCollection $genres) : void
+    public function addGenres(EntityCollection $genres): void
     {
-        foreach($genres as $genre) {
+        foreach ($genres as $genre) {
             $this->addGenre($genre);
         }
     }

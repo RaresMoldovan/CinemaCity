@@ -10,8 +10,11 @@ namespace Model\ConsoleManager\Output;
 
 class ErrorReporter
 {
+    /**
+     * @param string $errorMessage
+     */
     public function report(string $errorMessage)
     {
-        echo "ERROR!" . PHP_EOL . $errorMessage;
+        echo "ERROR!" . PHP_EOL . $errorMessage . PHP_EOL;
     }
 }

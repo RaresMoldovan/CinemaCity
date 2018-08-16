@@ -1,0 +1,36 @@
+<div class="container">
+    <div id="banner-title" class="jumbotron">
+        <h1><?php echo  $show->getMovie()->getName()?></h1>
+        <p><i><?php echo  $show->getMovie()->getDescription()?></i></p>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <img class="profile-img-card" src= "<?php echo  $show->getMovie()->getImage(); ?>" height="500" />
+            </div>
+            <div class="col-md3">
+                <div class="c">GENRES</div>
+                <div class="d" id="genreList">
+                    <?php foreach($genres as $genre): echo $genre->getName() . ' '; endforeach;?>
+                </div>
+                 <div class="c"> <?php echo $show->getHall()->getName()?></div>
+                 <div class="c"><?php echo $show->getTime()?></div>
+                <form method="post">
+                <div class="c">
+                    <select class="form-control" title="Show display" name="seat" id="showSelector"  >
+                        <?php foreach($seats as $seat): ?>
+                            <option value="<?php echo $seat->getId() ?>" ><?php echo $seat->getCode()?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <div>
+                        <input class="btn btn-primary" type="submit" id="confirmButton">
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</div>

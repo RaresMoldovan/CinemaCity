@@ -11,6 +11,7 @@ namespace Model\DataAccess\Mapper;
 use Model\Domain\Entity\Entity;
 use Model\Domain\Entity\Seat;
 use Model\DataAccess\Repository\HallRepository;
+use Model\Domain\Entity\NullEntity;
 
 class SeatMapper extends EntityMapper
 {
@@ -19,11 +20,19 @@ class SeatMapper extends EntityMapper
 
     private $hallRepository;
 
+    /**
+     * SeatMapper constructor.
+     * @param HallRepository $hallRepository
+     */
     public function __construct(HallRepository $hallRepository)
     {
         $this->hallRepository = $hallRepository;
     }
 
+    /**
+     * @param array $associative
+     * @return Entity
+     */
     public function map(array $associative): Entity
     {
         $id     = $associative[parent::FIELD_ID];

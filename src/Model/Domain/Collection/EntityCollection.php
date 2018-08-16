@@ -25,6 +25,9 @@ class EntityCollection implements \Iterator, \Countable
         $this->position = 0;
     }
 
+    /**
+     * @param Entity $item
+     */
     public function addItem(Entity $item): void
     {
         $id               = $item->getId();
@@ -32,38 +35,60 @@ class EntityCollection implements \Iterator, \Countable
         $this->items[$id] = $item;
     }
 
+    /**
+     * @param string $id
+     * @return Entity
+     */
     public function getItem(string $id): Entity
     {
         return isset($this->items[$id]) ? $this->items[$id] : null;
     }
 
+    /**
+     * @return mixed
+     */
     public function current()
     {
         $index = $this->itemIds[$this->position];
         return $this->items[$index];
     }
 
-    public function next()
+    /**
+     * @return void
+     */
+    public function next(): void
     {
         $this->position++;
     }
 
-    public function key()
+    /**
+     * @return int
+     */
+    public function key(): int
     {
         return $this->position;
     }
 
-    public function valid()
+    /**
+     * @return bool
+     */
+    public function valid(): bool
     {
         return (isset($this->itemIds[$this->position]));
     }
 
-    public function rewind()
+    /**
+     * @return void
+     */
+    public function rewind(): void
     {
         $this->position = 0;
     }
 
-    public function count()
+    /**
+     * @return int
+     */
+    public function count(): int
     {
         return count($this->items);
     }
